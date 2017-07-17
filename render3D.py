@@ -59,7 +59,7 @@ def Render_3D(file_name, view, camera_pos, focal_point, view_up):
 #    show_m.render()
 #    show_m.start()
 ##     
-    fname = file_name[0:-4]+'_'+view+'.png'
+    fname = 'images/'+file_name[0:-4]+'_'+view+'.png'
     window.snapshot(renderer, fname=fname, 
                         size=(800, 800), offscreen=True, order_transparent=False)  
     
