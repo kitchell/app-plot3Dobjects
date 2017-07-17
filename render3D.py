@@ -14,6 +14,7 @@ def Render_3D(file_name, view, camera_pos, focal_point, view_up):
     import vtk
     from vtk.util.numpy_support import vtk_to_numpy
     from dipy.viz import window, actor
+    import os
     
     # Read the surface from file
     object = vtk.vtkPolyDataReader()
@@ -58,8 +59,9 @@ def Render_3D(file_name, view, camera_pos, focal_point, view_up):
 #    show_m.initialize()
 #    show_m.render()
 #    show_m.start()
-##     
-    fname = 'images/'+file_name[0:-4]+'_'+view+'.png'
+
+    fname = os.path.basename(file_name)
+    fname = 'images/'+fname[0:-4]+'_'+view+'.png'
     window.snapshot(renderer, fname=fname, 
                         size=(800, 800), offscreen=True, order_transparent=False)  
     
