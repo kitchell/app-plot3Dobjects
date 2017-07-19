@@ -14,9 +14,9 @@ fi
 
 source activate dipyenv
 
-export PYTHONPATH=export PYTHONPATH=/usr/local/nibabel:$PYTHONPATH
-export PYTHONPATH=export PYTHONPATH=/usr/local/dipy:$PYTHONPATH
-export PYTHONPATH=export PYTHONPATH=/usr/local/xvfbwrapper:$PYTHONPATH
+export PYTHONPATH=/usr/local/nibabel:$PYTHONPATH
+export PYTHONPATH=/usr/local/dipy:$PYTHONPATH
+export PYTHONPATH=/usr/local/xvfbwrapper:$PYTHONPATH
 
 
 echo "starting main"
