@@ -6,7 +6,7 @@ Created on Sun Jul 16 18:45:22 2017
 """
 
 
-def Render_3D(file_name, view, camera_pos, focal_point, view_up):
+def Render_3D(file_name, view, camera_pos, focal_point, view_up, color):
 
     # load VTK
     #from vtk import *
@@ -29,7 +29,8 @@ def Render_3D(file_name, view, camera_pos, focal_point, view_up):
     #objectActor.GetProperty().SetColor(0.5,0.5,0.5) # grey
     #objectActor.GetProperty().SetColor(.24, .70, .44) #mediumseagreen
     #objectActor.GetProperty().SetColor(0.498039, 1, 0.831373) #springgreen
-    objectActor.GetProperty().SetColor(0.06577894737,0.4776315789,0.8531631579) #blue
+    objectActor.GetProperty().SetColor(color[0],color[1],color[2])
+
     # Attach to a renderer
 #    ren = vtk.vtkRenderer()
 #    ren.AddActor(objectActor)
