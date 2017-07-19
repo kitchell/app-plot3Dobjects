@@ -26,9 +26,10 @@ def Render_3D(file_name, view, camera_pos, focal_point, view_up):
     
     objectActor=vtk.vtkActor()
     objectActor.SetMapper(objectMapper)
-    #objectActor.GetProperty().SetColor(0.5,0.5,0.5)
-    #objectActor.GetProperty().SetColor(.24, .70, .44)
-    objectActor.GetProperty().SetColor(0.498039, 1, 0.831373)
+    #objectActor.GetProperty().SetColor(0.5,0.5,0.5) # grey
+    #objectActor.GetProperty().SetColor(.24, .70, .44) #mediumseagreen
+    #objectActor.GetProperty().SetColor(0.498039, 1, 0.831373) #springgreen
+    objectActor.GetProperty().SetColor(0.06577894737,0.4776315789,0.8531631579) #blue
     # Attach to a renderer
 #    ren = vtk.vtkRenderer()
 #    ren.AddActor(objectActor)
