@@ -56,7 +56,7 @@ color = {'Callosum_Forceps_Major_surf.vtk':[0.04850526316,0.6792842105,0.7341421
 
 for file in glob.glob(config["surfaces"] + "/*.vtk"):
     print file
-    if file in color:
+    if file in color.keys():
 #for file in glob.glob('surfaces/*.vtk'):
         for d in range(len(camera_pos)):
             Render_3D(file, views[d], camera_pos[d], focal_point[d], view_up[d], color[file])
