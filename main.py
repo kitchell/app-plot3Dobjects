@@ -61,8 +61,9 @@ for file in glob.glob(config["surfaces"] + "/*.vtk"):
         for d in range(len(camera_pos)):
             Render_3D(file, views[d], camera_pos[d], focal_point[d], view_up[d], color[file])
     else:
+        image_color = [0.06577894737,0.4776315789,0.8531631579]
         for d in range(len(camera_pos)):
-            Render_3D(file, views[d], camera_pos[d], focal_point[d], view_up[d], [])
+            Render_3D(file, views[d], camera_pos[d], focal_point[d], view_up[d], image_color)
         
 
 vdisplay.stop()
