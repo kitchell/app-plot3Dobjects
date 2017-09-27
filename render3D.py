@@ -17,7 +17,12 @@ def Render_3D(file_name, view, camera_pos, focal_point, view_up, color):
     import os
     
     # Read the surface from file
-    object = vtk.vtkPolyDataReader()
+    if file_name[-3:] == 'vtk':
+        object = vtk.vtkPolyDataReader()
+    if file_name[-3:] == 'ply':
+        object = vtk.vtkPLYReader()
+    if file_name[-3:] == 'stl':
+        object = vtk.vtkSTLReader()
     object.SetFileName(file_name)
     
     objectMapper = vtk.vtkPolyDataMapper()
