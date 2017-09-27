@@ -10,7 +10,7 @@ import json
 from xvfbwrapper import Xvfb
 import os
 import glob
-import shutil
+
 
 # start virtual display
 vdisplay = Xvfb()
@@ -19,6 +19,9 @@ vdisplay.start()
 # read json file
 with open('config.json') as config_json:
     config = json.load(config_json)
+
+with open(config["surfaces"] +'/color.json') as color_json:
+    color = json.load(color_json)
 
 pwd = os.getcwd()
 os.mkdir(pwd + "/images")
@@ -57,7 +60,7 @@ views = ['axial', 'sagittal_left', 'coronal', 'sagittal_right']
 
 for file in glob.glob(config["surfaces"] + "/*.vtk"):
     print file
-    fname = os.path.basename(file)
+    fname = os.path.basename(file)[0:-4]
     if fname in color.keys():
 #for file in glob.glob('surfaces/*.vtk'):
         for d in range(len(camera_pos)):
