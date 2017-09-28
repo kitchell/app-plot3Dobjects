@@ -22,7 +22,11 @@ with open('config.json') as config_json:
 
 if os.path.exists(config["surfaces"] +'/color.json'):
     with open(config["surfaces"] +'/color.json') as color_json:
-        color = json.load(color_json)
+        color_list = json.load(color_json)
+    
+    color = {}
+    for i in range(len(color_list)):
+        color[color_list[i]['name']]=color_list[i]['color']
 else:
     color = {'Callosum_Forceps_Major_surf':[0.04850526316,0.6792842105,0.7341421053],
              'Callosum_Forceps_Minor_surf':[0.1400526316,0.7084789474,0.6680368421],
@@ -58,7 +62,8 @@ view_up = [(0.05, 0.98, -0.21), (-0.02, 0.01, -1.00),
 views = ['axial', 'sagittal_left', 'coronal', 'sagittal_right']
 
 
-
+json_file = {}
+file_list = []
 for file in glob.glob(config["surfaces"] + "/*.vtk"):
     print file
     fname = os.path.basename(file)[0:-4]
@@ -66,10 +71,24 @@ for file in glob.glob(config["surfaces"] + "/*.vtk"):
 #for file in glob.glob('surfaces/*.vtk'):
         for d in range(len(camera_pos)):
             Render_3D(file, views[d], camera_pos[d], focal_point[d], view_up[d], color[fname])
+            temp_dict = {}
+            temp_dict["filename"]='images/'+fname+'_'+views[d]+'.png'
+            temp_dict["name"]=fname.replace('_', ' ')+' '+views[d].replace('_', ' ') + ' view'
+            temp_dict["desc"]= 'This figure shows '+ fname.replace('_', ' ')+' '+views[d].replace('_', ' ') + ' view'
+            file_list.append(temp_dict)
+
     else:
         image_color = [0.06577894737,0.4776315789,0.8531631579]
         for d in range(len(camera_pos)):
             Render_3D(file, views[d], camera_pos[d], focal_point[d], view_up[d], image_color)
-        
+            temp_dict = {}
+            temp_dict["filename"]='images/'+fname+'_'+views[d]+'.png'
+            temp_dict["name"]=fname.replace('_', ' ')+' '+views[d].replace('_', ' ') + ' view'
+            temp_dict["desc"]= 'This figure shows '+ fname.replace('_', ' ')+' '+views[d].replace('_', ' ') + ' view'
+            file_list.append(temp_dict)
 
+json_file['images'] = file_list
+with open('images.json', 'w') as f:
+    f.write(json.dumps(json_file, indent=4))
+   
 vdisplay.stop()
