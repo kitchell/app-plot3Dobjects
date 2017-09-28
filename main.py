@@ -26,7 +26,7 @@ if os.path.exists(config["surfaces"] +'/color.json'):
     
     color = {}
     for i in range(len(color_list)):
-        color[color_list[i]['name']]=color_list[i]['color']
+        color[color_list[i]['name'].replace(' ', '_')]=color_list[i]['color']
 else:
     color = {'Callosum_Forceps_Major_surf':[0.04850526316,0.6792842105,0.7341421053],
              'Callosum_Forceps_Minor_surf':[0.1400526316,0.7084789474,0.6680368421],
