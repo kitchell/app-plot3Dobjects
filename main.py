@@ -72,7 +72,7 @@ for file in glob.glob(config["surfaces"] + "/*.vtk"):
         for d in range(len(camera_pos)):
             Render_3D(file, views[d], camera_pos[d], focal_point[d], view_up[d], color[fname])
             temp_dict = {}
-            temp_dict["filename"]='images/'+fname+'_'+views[d]+'.png'
+            temp_dict["filename"]='images/'+fname+'_surf_'+views[d]+'.png'
             temp_dict["name"]=fname.replace('_', ' ')+' '+views[d].replace('_', ' ') + ' view'
             temp_dict["desc"]= 'This figure shows '+ fname.replace('_', ' ')+' '+views[d].replace('_', ' ') + ' view'
             file_list.append(temp_dict)
@@ -82,7 +82,7 @@ for file in glob.glob(config["surfaces"] + "/*.vtk"):
         for d in range(len(camera_pos)):
             Render_3D(file, views[d], camera_pos[d], focal_point[d], view_up[d], image_color)
             temp_dict = {}
-            temp_dict["filename"]='images/'+fname+'_'+views[d]+'.png'
+            temp_dict["filename"]='images/'+fname+'_surf_'+views[d]+'.png'
             temp_dict["name"]=fname.replace('_', ' ')+' '+views[d].replace('_', ' ') + ' view'
             temp_dict["desc"]= 'This figure shows '+ fname.replace('_', ' ')+' '+views[d].replace('_', ' ') + ' view'
             file_list.append(temp_dict)
