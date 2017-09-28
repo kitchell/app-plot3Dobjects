@@ -21,13 +21,13 @@ export PYTHONPATH=/usr/local/xvfbwrapper:$PYTHONPATH
 
 echo "starting main"
 
-time python $SERVICE_DIR/main.py 
+NUMFILES=`python $SERVICE_DIR/main.py` 
 
 cp $SERVICE_DIR/images.json .
 
 #check for output files
 count=$(ls images/*.png | wc -l)
-if [ $count -eq 80 ];
+if [ $count == $NUMFILES ];
 then 
   echo 0 > finished
 else

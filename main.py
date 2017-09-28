@@ -65,7 +65,7 @@ views = ['axial', 'sagittal_left', 'coronal', 'sagittal_right']
 json_file = {}
 file_list = []
 for file in glob.glob(config["surfaces"] + "/*.vtk"):
-    print file
+    #print file
     fname = os.path.basename(file)[0:-4]
     if fname in color.keys():
 #for file in glob.glob('surfaces/*.vtk'):
@@ -90,5 +90,7 @@ for file in glob.glob(config["surfaces"] + "/*.vtk"):
 json_file['images'] = file_list
 with open('images.json', 'w') as f:
     f.write(json.dumps(json_file, indent=4))
-   
+
+print len(file_list)
+  
 vdisplay.stop()
