@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+#!/usr/bin/env python
 """
 Created on Sun Jul 16 20:08:14 2017
 
@@ -90,6 +90,19 @@ for file in glob.glob(config["surfaces"] + "/*.vtk"):
 json_file['images'] = file_list
 with open('images.json', 'w') as f:
     f.write(json.dumps(json_file, indent=4))
+
+if config['remove_background']:
+    import cv2
+    def removebkgrd(filename):
+        src = cv2.imread(file_name, 1)
+        tmp = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY)
+        _,alpha = cv2.threshold(tmp,0,255,cv2.THRESH_BINARY)
+        b, g, r = cv2.split(src)
+        rgba = [b,g,r, alpha]
+        dst = cv2.merge(rgba,4)
+        cv2.imwrite(filename, dst)
+    for file in glob.glob(pwd+'/images/*.png'):
+        removebkgrd(file)
 
 print len(file_list)
   
