@@ -6,7 +6,7 @@ MAINTAINER Lindsey Kitchell <kitchell@indiana.edu>
 RUN apt update && \
     apt install -y git python-vtk python-numpy python-scipy python-pip xvfb
 #RUN pip install h5py dicom six Cython scipy tables opencv-python 
-RUN pip install xvfbwrapper dipy nibabel opencv-python
+RUN pip install xvfbwrapper dipy nibabel opencv-python numpy
 #RUN git clone https://github.com/nipy/nibabel.git /nibabel
 #RUN cd /nibabel && python setup.py build_ext --inplace
 #RUN git clone https://github.com/nipy/dipy.git /dipy

@@ -5,6 +5,9 @@
 
 module load singularity
 
+rm -r images
+rm -r images.json
+
 singularity run -e /N/u/brlife/Carbonate/plot3dsurfaces-2017-11-15-4f726225c927.img
 
 if [ ! -s images.json ];
