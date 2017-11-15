@@ -20,7 +20,7 @@ COPY render3D.py /render3D.py
 #ENV PYTHONPATH /dipy:$PYTHONPATH
 #ENV PYTHONPATH /nibabl:$PYTHONPATH
 #ENV PYTHONPATH /xvfbwrapper:$PYTHONPATH
-#ENV PYTHONPATH /usr/local/lib/python2.7/dist-packages
+ENV PYTHONPATH /usr/local/lib/python2.7/dist-packages
 
 RUN mkdir /output && ldconfig
 
