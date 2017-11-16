@@ -67,14 +67,15 @@ json_file = {}
 file_list = []
 for file in glob.glob(config["surfaces"] + "/*.vtk"):
     #print file
+    fname = os.path.basename(file)[0:-9]
     if color_json_exists == 1:
-        fname = os.path.basename(file)[0:-9]
+        fname_color = os.path.basename(file)[0:-9]
     else:
-        fname = os.path.basename(file)[0:-4]
-    if fname in color.keys():
+        fname_color = os.path.basename(file)[0:-4]
+    if fname_color in color.keys():
 #for file in glob.glob('surfaces/*.vtk'):
         for d in range(len(camera_pos)):
-            Render_3D(file, views[d], camera_pos[d], focal_point[d], view_up[d], color[fname])
+            Render_3D(file, views[d], camera_pos[d], focal_point[d], view_up[d], color[fname_color])
             temp_dict = {}
             temp_dict["filename"]='images/'+fname+'_surf_'+views[d]+'.png'
             temp_dict["name"]=fname.replace('_', ' ')+' '+views[d].replace('_', ' ') + ' view'
