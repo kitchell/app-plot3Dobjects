@@ -94,7 +94,7 @@ with open('images.json', 'w') as f:
 if config['remove_background']:
     import cv2
     def removebkgrd(filename):
-        src = cv2.imread(file_name, 1)
+        src = cv2.imread(filename, 1)
         tmp = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY)
         _,alpha = cv2.threshold(tmp,0,255,cv2.THRESH_BINARY)
         b, g, r = cv2.split(src)
