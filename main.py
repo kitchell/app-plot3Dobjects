@@ -23,11 +23,12 @@ with open('config.json') as config_json:
 if os.path.exists(config["surfaces"] +'/color.json'):
     with open(config["surfaces"] +'/color.json') as color_json:
         color_list = json.load(color_json)
-    
+    color_json_exists = 1
     color = {}
     for i in range(len(color_list)):
         color[color_list[i]['name'].replace(' ', '_')]=color_list[i]['color']
 else:
+    color_json_exists = 0
     color = {'Callosum_Forceps_Major_surf':[0.04850526316,0.6792842105,0.7341421053],
              'Callosum_Forceps_Minor_surf':[0.1400526316,0.7084789474,0.6680368421],
              'Left_Arcuate_surf':[0.9595947368,0.8869315789,0.1189526316], 
@@ -66,7 +67,10 @@ json_file = {}
 file_list = []
 for file in glob.glob(config["surfaces"] + "/*.vtk"):
     #print file
-    fname = os.path.basename(file)[0:-4]
+    if color_json_exists == 1:
+        fname = os.path.basename(file)[0:-9]
+    else:
+        fname = os.path.basename(file)[0:-4]
     if fname in color.keys():
 #for file in glob.glob('surfaces/*.vtk'):
         for d in range(len(camera_pos)):
