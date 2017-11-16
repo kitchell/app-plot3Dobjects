@@ -13,7 +13,7 @@ import glob
 
 
 # start virtual display
-vdisplay = Xvfb()
+vdisplay = Xvfb(width=1280, height=740)
 vdisplay.start()
 
 # read json file
