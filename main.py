@@ -66,7 +66,8 @@ json_file = {}
 file_list = []
 for file in glob.glob(config["surfaces"] + "/*.vtk"):
     #print file
-    fname = os.path.basename(file)[0:-9]
+    fname = os.path.basename(file)[0:-4]
+    print fname
     if fname in color.keys():
 #for file in glob.glob('surfaces/*.vtk'):
         for d in range(len(camera_pos)):
