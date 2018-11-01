@@ -59,6 +59,9 @@ def Render_3D(file_name, view, camera_pos, focal_point, view_up, color):
    
     renderer = window.Renderer()
     renderer.clear()
+#    renderer.set_camera(position=camera_pos[d],
+#                            focal_point=focal_point[d],
+#                            view_up=view_up[d])
     renderer.set_camera(position=camera_pos,
                             focal_point=focal_point,
                             view_up=view_up)
@@ -67,6 +70,7 @@ def Render_3D(file_name, view, camera_pos, focal_point, view_up, color):
 #    show_m.initialize()
 #    show_m.render()
 #    show_m.start()
+#    renderer.camera_info()
 
     fname = os.path.basename(file_name)
     fname = 'images/'+fname[0:-4]+'_'+view+'.png'

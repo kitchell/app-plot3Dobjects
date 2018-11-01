@@ -6,11 +6,13 @@ Created on Sun Jul 16 20:08:14 2017
 """
 
 from render3D import Render_3D
+from renderall import Render_All
 import json
 from xvfbwrapper import Xvfb
 import os
 import glob
-
+from matplotlib import cm
+import matplotlib as mpl 
 
 # start virtual display
 vdisplay = Xvfb(width=1280, height=740)
@@ -27,7 +29,7 @@ if os.path.exists(config["surfaces"] +'/color.json'):
     color = {}
     for i in range(len(color_list)):
         color[color_list[i]['name'].replace(' ', '_')]=color_list[i]['color']
-else:
+elif os.path.exists(config["surfaces"] +'/Callosum_Forceps_Major_surf.*'):
     color_json_exists = 0
     color = {'Callosum_Forceps_Major_surf':[0.04850526316,0.6792842105,0.7341421053],
              'Callosum_Forceps_Minor_surf':[0.1400526316,0.7084789474,0.6680368421],
@@ -49,29 +51,60 @@ else:
              'Right_SLF_surf':[0.9056631579,0.7261052632,0.3104684211],
              'Right_Thalamic_Radiation_surf': [0.2052473684,0.2466526316,0.6930631579],
              'Right_Uncinate_surf':[0.9847368421,0.8141052632,0.1733684211]}
+else:
+    color_json_exists = -1
 
+
+norm = mpl.colors.Normalize(vmin=1, vmax=72)
+
+#tractseg_colors = []
+#list(cm.nipy_spectral(norm(n)))[0:3]
 
 pwd = os.getcwd()
 os.mkdir(pwd + "/images")
 
-camera_pos = [(-5.58, 84.98, -467.47), (482.32, 3.58, -6.28),
-              (-58.32, 454.83, -14.22), (-455.46, 9.14, 95.68)]
-focal_point = [(-8.92, -16.15, 4.47), (-8.92, -16.15, 4.47),
-               (-8.92, -16.15, 4.47), (-8.92, -16.15, 4.47)]
-view_up = [(0.05, 0.98, -0.21), (-0.02, 0.01, -1.00),
-           (-0.01, 0.04, -1.00), (-0.20, -0.21, -0.96)]
-views = ['axial', 'sagittal_left', 'coronal', 'sagittal_right']
+
+camera_pos = [(118.81, 211.04, -355.12), (571.65, 100.27, 146.49),
+              (89.77, 559.43, 169.19), (-391.38, 120.76, 97.38),
+              (84.96, -196.98, 65.47), (77.83, 53.93, 537.86)]
+focal_point = [(90.62, 112.50, 87.50), (91.25, 111.88, 100.62),
+               (90.62, 112.50, 87.50), (91.25, 111.88, 100.62),
+               (90.62, 112.50, 87.50), (90.62, 112.50, 87.50)]
+view_up = [(-0.02, 0.98, 0.22), (0.10, 0.08, -0.99),
+           (0.02, 0.18, -0.98), (0.01, 0.19, -0.98),
+           (0.04, 0.07, -1.00), (0.00, 0.99, 0.13)]
+views = ['top', 'sagittal_left', 'front', 'sagittal_right', 'back', 'bottom']
+
+
+#camera_pos = [(-5.58, 84.98, -467.47), (482.32, 3.58, -6.28),
+#              (-58.32, 454.83, -14.22), (-455.46, 9.14, 95.68),
+#              (82.61, -195.91, 120.86) ]
+#focal_point = [(-8.92, -16.15, 4.47), (-8.92, -16.15, 4.47),
+#               (-8.92, -16.15, 4.47), (-8.92, -16.15, 4.47),
+#               (90.62, 112.50, 87.50)]
+#view_up = [(0.05, 0.98, -0.21), (-0.02, 0.01, -1.00),
+#           (-0.01, 0.04, -1.00), (-0.20, -0.21, -0.96),
+#           (0.04, -0.11, -0.99)]
+#views = ['top', 'sagittal_left', 'front', 'sagittal_right', 'back']
 
 
 json_file = {}
 file_list = []
+count = 1
+#for file in glob.glob('/Users/lindseykitchell/Downloads/surfaces/' + "/*.vtk"):
+  
 for file in glob.glob(config["surfaces"] + "/*.vtk"):
     #print file
     fname = os.path.basename(file)[0:-9]
     if color_json_exists == 1:
+        fname = os.path.basename(file)[0:-9]
         fname_color = os.path.basename(file)[0:-9]
-    else:
+    elif color_json_exists == 0:
+        fname = os.path.basename(file)[0:-9]
         fname_color = os.path.basename(file)[0:-4]
+    elif color_json_exists == -1:
+        fname = os.path.basename(file)[0:-4]
+        fname_color = ''     
     if fname_color in color.keys():
 #for file in glob.glob('surfaces/*.vtk'):
         for d in range(len(camera_pos)):
@@ -83,15 +116,27 @@ for file in glob.glob(config["surfaces"] + "/*.vtk"):
             file_list.append(temp_dict)
 
     else:
-        image_color = [0.06577894737,0.4776315789,0.8531631579]
+#        image_color = [0.06577894737,0.4776315789,0.8531631579]
+        image_color = list(cm.rainbow(norm(count)))[0:3]
         for d in range(len(camera_pos)):
             Render_3D(file, views[d], camera_pos[d], focal_point[d], view_up[d], image_color)
             temp_dict = {}
-            temp_dict["filename"]='images/'+fname+'_surf_'+views[d]+'.png'
+            temp_dict["filename"]='images/'+fname+views[d]+'.png'
             temp_dict["name"]=fname.replace('_', ' ')+' '+views[d].replace('_', ' ') + ' view'
             temp_dict["desc"]= 'This figure shows '+ fname.replace('_', ' ')+' '+views[d].replace('_', ' ') + ' view'
             file_list.append(temp_dict)
+    
+    count += 1
+    
+for d in range(len(camera_pos)):
+    Render_All(config["surfaces"], views[d], camera_pos[d], focal_point[d], view_up[d], norm)
+    temp_dict = {}
+    temp_dict["filename"]='images/'+'all_surfaces'+views[d]+'.png'
+    temp_dict["name"]='All surfaces ' +views[d].replace('_', ' ') + ' view'
+    temp_dict["desc"]= 'This figure shows all surfaces'+' '+views[d].replace('_', ' ') + ' view'
+    file_list.append(temp_dict)
 
+    
 json_file['images'] = file_list
 with open('images.json', 'w') as f:
     f.write(json.dumps(json_file, indent=4))
