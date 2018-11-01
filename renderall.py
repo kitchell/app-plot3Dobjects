@@ -17,6 +17,9 @@ def Render_All(folder, view, camera_pos, focal_point, view_up, norm):
     import glob
     from matplotlib import cm
     
+    #tractseg surfaces to ignore
+    ignorefiles = ['CC.vtk', 'CA.vtk', 'FX_left.vtk', 'FX_right.vtk']    
+    
     renderer = window.Renderer()
     renderer.clear()
 #    renderer.set_camera(position=camera_pos[d],
@@ -32,28 +35,32 @@ def Render_All(folder, view, camera_pos, focal_point, view_up, norm):
     for file_name in glob.glob(folder + "/*.vtk"):
     
         color = list(cm.rainbow(norm(count)))[0:3]
-    # Read the surface from file
-        if file_name[-3:] == 'vtk':
-            object = vtk.vtkPolyDataReader()
-        if file_name[-3:] == 'ply':
-            object = vtk.vtkPLYReader()
-        if file_name[-3:] == 'stl':
-            object = vtk.vtkSTLReader()
-        object.SetFileName(file_name)
-    
-        objectMapper = vtk.vtkPolyDataMapper()
-        objectMapper.SetInputConnection(object.GetOutputPort())
-        objectMapper.ScalarVisibilityOff()
         
-        objectActor=vtk.vtkActor()
-        objectActor.SetMapper(objectMapper)
-        #objectActor.GetProperty().SetColor(0.5,0.5,0.5) # grey
-        #objectActor.GetProperty().SetColor(.24, .70, .44) #mediumseagreen
-        #objectActor.GetProperty().SetColor(0.498039, 1, 0.831373) #springgreen
-        objectActor.GetProperty().SetColor(color[0],color[1],color[2])
-
-        renderer.add(objectActor)
-        count += 1
+        if file_name in ignorefiles:
+            count += 1
+        else:
+            # Read the surface from file
+            if file_name[-3:] == 'vtk':
+                object = vtk.vtkPolyDataReader()
+            if file_name[-3:] == 'ply':
+                object = vtk.vtkPLYReader()
+            if file_name[-3:] == 'stl':
+                object = vtk.vtkSTLReader()
+            object.SetFileName(file_name)
+        
+            objectMapper = vtk.vtkPolyDataMapper()
+            objectMapper.SetInputConnection(object.GetOutputPort())
+            objectMapper.ScalarVisibilityOff()
+            
+            objectActor=vtk.vtkActor()
+            objectActor.SetMapper(objectMapper)
+            #objectActor.GetProperty().SetColor(0.5,0.5,0.5) # grey
+            #objectActor.GetProperty().SetColor(.24, .70, .44) #mediumseagreen
+            #objectActor.GetProperty().SetColor(0.498039, 1, 0.831373) #springgreen
+            objectActor.GetProperty().SetColor(color[0],color[1],color[2])
+    
+            renderer.add(objectActor)
+            count += 1
     
     show_m = window.ShowManager(renderer, size=(800, 800))
 #    show_m.initialize()
