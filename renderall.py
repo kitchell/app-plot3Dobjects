@@ -35,8 +35,8 @@ def Render_All(folder, view, camera_pos, focal_point, view_up, norm):
     for file_name in glob.glob(folder + "/*.vtk"):
     
         color = list(cm.rainbow(norm(count)))[0:3]
-        
-        if file_name in ignorefiles:
+
+        if os.path.basename(file_name)in ignorefiles:
             count += 1
         else:
             # Read the surface from file
