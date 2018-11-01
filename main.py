@@ -133,7 +133,7 @@ for file in glob.glob(config["surfaces"] + "/*.vtk"):
 for d in range(len(camera_pos)):
     Render_All(config["surfaces"], views[d], camera_pos[d], focal_point[d], view_up[d], norm)
     temp_dict = {}
-    temp_dict["filename"]='images/'+'all_surfaces'+views[d]+'.png'
+    temp_dict["filename"]='images/'+'all_surfaces_'+views[d]+'.png'
     temp_dict["name"]='All surfaces ' +views[d].replace('_', ' ') + ' view'
     temp_dict["desc"]= 'This figure shows all surfaces'+' '+views[d].replace('_', ' ') + ' view'
     file_list.append(temp_dict)
