@@ -22,16 +22,7 @@ vdisplay.start()
 with open('config.json') as config_json:
     config = json.load(config_json)
 
-if os.path.exists(config["surfaces"] +'/color.json'):
-    with open(config["surfaces"] +'/color.json') as color_json:
-        color_list = json.load(color_json)
-    color_json_exists = 1
-    color = {}
-    for i in range(len(color_list)):
-        color[color_list[i]['name'].replace(' ', '_')]=color_list[i]['color']
-elif os.path.exists(config["surfaces"] +'/Callosum_Forceps_Major_surf.*'):
-    color_json_exists = 0
-    color = {'Callosum_Forceps_Major_surf':[0.04850526316,0.6792842105,0.7341421053],
+color = {'Callosum_Forceps_Major_surf':[0.04850526316,0.6792842105,0.7341421053],
              'Callosum_Forceps_Minor_surf':[0.1400526316,0.7084789474,0.6680368421],
              'Left_Arcuate_surf':[0.9595947368,0.8869315789,0.1189526316], 
              'Left_Cingulum_Cingulate_surf': [0.06577894737,0.4776315789,0.8531631579], 
@@ -51,6 +42,17 @@ elif os.path.exists(config["surfaces"] +'/Callosum_Forceps_Major_surf.*'):
              'Right_SLF_surf':[0.9056631579,0.7261052632,0.3104684211],
              'Right_Thalamic_Radiation_surf': [0.2052473684,0.2466526316,0.6930631579],
              'Right_Uncinate_surf':[0.9847368421,0.8141052632,0.1733684211]}
+
+if os.path.exists(config["surfaces"] +'/color.json'):
+    with open(config["surfaces"] +'/color.json') as color_json:
+        color_list = json.load(color_json)
+    color_json_exists = 1
+    color = {}
+    for i in range(len(color_list)):
+        color[color_list[i]['name'].replace(' ', '_')]=color_list[i]['color']
+elif os.path.exists(config["surfaces"] +'/Callosum_Forceps_Major_surf.*'):
+    color_json_exists = 0
+    
 else:
     color_json_exists = -1
 
