@@ -48,9 +48,7 @@ if os.path.exists(config["surfaces"] +'/color.json'):
         color_list = json.load(color_json)
     color_json_exists = 1
     color = {}
-    if os.path.exists(config["surfaces"] +'/leftfrontoThalamic_Vol.vtk') or 
-        os.path.exists(config["surfaces"] +'/leftfrontoThalamic_Vol.ply') or 
-        os.path.exists(config["surfaces"] +'/leftfrontoThalamic_Vol.stl'):
+    if os.path.exists(config["surfaces"] +'/leftfrontoThalamic_Vol.vtk') or os.path.exists(config["surfaces"] +'/leftfrontoThalamic_Vol.ply') or os.path.exists(config["surfaces"] +'/leftfrontoThalamic_Vol.stl'):
         wma = 1
     else:
         wma = 0
