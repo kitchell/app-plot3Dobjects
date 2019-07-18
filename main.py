@@ -48,11 +48,12 @@ if os.path.exists(config["surfaces"] +'/color.json'):
         color_list = json.load(color_json)
     color_json_exists = 1
     color = {}
+    if os.path.exists(config["surfaces"] +'/leftfrontoThalamic_Vol.*'):
+        wma = 1
     for i in range(len(color_list)):
         color[color_list[i]['name'].replace(' ', '_')]=color_list[i]['color']
 elif os.path.exists(config["surfaces"] +'/Callosum_Forceps_Major_surf.*'):
     color_json_exists = 0
-    
 else:
     color_json_exists = -1
 
@@ -99,8 +100,12 @@ for file in glob.glob(config["surfaces"] + "/*.vtk"):
     #print file
     fname = os.path.basename(file)[0:-9]
     if color_json_exists == 1:
-        fname = os.path.basename(file)[0:-9]
-        fname_color = os.path.basename(file)[0:-9]
+        if wma:
+            fname=os.path.basename(file)[0:-4]
+            fname_color = os.path.basename(file)[0:-4]
+        else:
+            fname = os.path.basename(file)[0:-9]
+            fname_color = os.path.basename(file)[0:-9]
     elif color_json_exists == 0:
         fname = os.path.basename(file)[0:-9]
         fname_color = os.path.basename(file)[0:-4]
@@ -112,7 +117,10 @@ for file in glob.glob(config["surfaces"] + "/*.vtk"):
         for d in range(len(camera_pos)):
             Render_3D(file, views[d], camera_pos[d], focal_point[d], view_up[d], color[fname_color])
             temp_dict = {}
-            temp_dict["filename"]='images/'+fname+'_surf_'+views[d]+'.png'
+            if wma:
+                temp_dict["filename"]='images/'+fname+'_Vol_'+views[d]+'.png'
+            else:
+                temp_dict["filename"]='images/'+fname+'_surf_'+views[d]+'.png'
             temp_dict["name"]=fname.replace('_', ' ')+' '+views[d].replace('_', ' ') + ' view'
             temp_dict["desc"]= 'This figure shows '+ fname.replace('_', ' ')+' '+views[d].replace('_', ' ') + ' view'
             file_list.append(temp_dict)
