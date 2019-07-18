@@ -50,6 +50,9 @@ if os.path.exists(config["surfaces"] +'/color.json'):
     color = {}
     if os.path.exists(config["surfaces"] +'/leftfrontoThalamic_Vol.*'):
         wma = 1
+    else:
+        wma = 0
+    print wma
     for i in range(len(color_list)):
         color[color_list[i]['name'].replace(' ', '_')]=color_list[i]['color']
 elif os.path.exists(config["surfaces"] +'/Callosum_Forceps_Major_surf.*'):
