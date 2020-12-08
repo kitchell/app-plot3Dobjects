@@ -2,7 +2,7 @@
 [![Run on Brainlife.io](https://img.shields.io/badge/Brainlife-bl.app.131-blue.svg)](https://doi.org/10.25663/brainlife.app.131)
 
 # app-plot3Dobjects
-application to plot 3D objects in .vtk format in 4 views: axial, coronal, left and right sagittal
+This App allows you to plot 3D objects in .vtk format in four different views: axial, coronal, left, and right sagittal.
 
 ### Author
 - Lindsey Kitchell (kitchell@indiana.edu)
